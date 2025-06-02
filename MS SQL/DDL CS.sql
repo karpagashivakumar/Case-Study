@@ -1,0 +1,42 @@
+CREATE DATABASE EventDb;
+USE EventDb;
+
+CREATE TABLE UserInfo (
+    EmailId VARCHAR(100) PRIMARY KEY,
+    UserName VARCHAR(50) NOT NULL CHECK (LEN(UserName) BETWEEN 1 AND 50),
+    Role VARCHAR(20) NOT NULL CHECK (Role IN ('Admin', 'Participant')),
+    Password VARCHAR(20) NOT NULL CHECK (LEN(Password) BETWEEN 6 AND 20)
+);
+
+CREATE TABLE EventDetails (
+    EventId INT PRIMARY KEY IDENTITY(1,1),
+    EventName VARCHAR(50) NOT NULL CHECK (LEN(EventName) BETWEEN 1 AND 50),
+    EventCategory VARCHAR(50) NOT NULL CHECK (LEN(EventCategory) BETWEEN 1 AND 50),
+    EventDate DATETIME NOT NULL,
+    Description VARCHAR(MAX) NULL,
+    Status VARCHAR(20) CHECK (Status IN ('Active', 'In-Active'))
+);
+
+CREATE TABLE SpeakersDetails (
+    SpeakerId INT PRIMARY KEY IDENTITY(1,1),
+    SpeakerName VARCHAR(50) NOT NULL CHECK (LEN(SpeakerName) BETWEEN 1 AND 50)
+);
+
+CREATE TABLE SessionInfo (
+    SessionId INT PRIMARY KEY IDENTITY(1,1),
+    EventId INT NOT NULL FOREIGN KEY REFERENCES EventDetails(EventId) ON DELETE CASCADE ON UPDATE CASCADE,
+    SessionTitle VARCHAR(50) NOT NULL CHECK (LEN(SessionTitle) BETWEEN 1 AND 50),
+    SpeakerId INT NOT NULL FOREIGN KEY REFERENCES SpeakersDetails(SpeakerId) ON DELETE CASCADE ON UPDATE CASCADE,
+    Description VARCHAR(MAX) NULL,
+    SessionStart DATETIME NOT NULL,
+    SessionEnd DATETIME NOT NULL,
+    SessionUrl VARCHAR(MAX)
+);
+
+CREATE TABLE ParticipantEventDetails (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    ParticipantEmailId VARCHAR(100) NOT NULL FOREIGN KEY REFERENCES UserInfo(EmailId) ON DELETE CASCADE ON UPDATE CASCADE,
+    EventId INT NOT NULL FOREIGN KEY REFERENCES EventDetails(EventId),
+    SessionId INT NOT NULL FOREIGN KEY REFERENCES SessionInfo(SessionId) ON DELETE CASCADE ON UPDATE CASCADE,
+    IsAttended BIT CHECK (IsAttended IN (0,1))
+);
