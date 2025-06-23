@@ -1,0 +1,71 @@
+﻿@model List<MVCClientDirectory.Models.ClientInfo>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>All Client Details</title>
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">All Client Details</h2>
+
+        <!-- Add Client Button -->
+        <div class="mb-3 text-end">
+            <a href="@Url.Action("AddClients","Client")" class="btn btn-primary">Add New Client</a>
+        </div>
+
+        <!-- Search by Company Name -->
+        <form action="@Url.Action("GetDetailsByCompanyName", "Client")" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="companyName" class="form-control" placeholder="Enter Company Name..." required />
+                <button type="submit" class="btn btn-info">Search</button>
+            </div>
+        </form>
+
+        <!-- Client Table -->
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Company Name</th>
+                            <th>Web URL</th>
+                            <th>Email</th>
+                            <th>Category</th>
+                            <th>Standard</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cli in Model)
+                        {
+                            <tr>
+                                <td>@cli.ClientId</td>
+                                <td>@cli.CompanyName</td>
+                                <td>@cli.WebURL</td>
+                                <td>@cli.Email</td>
+                                <td>@cli.Category?.Replace("_", " ")</td>
+                                <td>@cli.Standard</td>
+                                <td>
+                                    <a href="@Url.Action("GetDetailsByClientId", "Client", new { id = cli.ClientId })"
+                                       class="btn btn-sm btn-success">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">
+                No client records found.
+            </div>
+        }
+    </div>
+</body>
+</html>
