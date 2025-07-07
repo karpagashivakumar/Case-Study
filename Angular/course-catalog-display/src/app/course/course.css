@@ -1,0 +1,58 @@
+h2 {
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.course-box {
+  margin-bottom: 20px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.title {
+  color: #007bff; /* Blue */
+}
+
+.instructor {
+  color: #007bff;
+}
+
+.date {
+  color: #6c2f00; /* Dark orange/brown */
+}
+
+.price {
+  color: #007bff;
+}
+
+.about {
+  color: #9c27b0; /* Purple */
+}
+
+.title-text {
+  color: #000;
+}
+
+.instructor-text {
+  color: #333;
+}
+
+.date-text {
+  color: #d18a00; /* Goldish */
+}
+
+.price-text {
+  color: #d18a00;
+}
+
+.about-text {
+  color: #9c27b0;
+}
+
+hr {
+  border: none;
+  border-top: 1px dashed #aaa;
+  margin-top: 10px;
+}

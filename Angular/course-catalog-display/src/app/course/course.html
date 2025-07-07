@@ -1,0 +1,36 @@
+<h2>🎓 Course Catalog</h2>
+
+<div *ngIf="courses.length > 0; else noCourses">
+  <div *ngFor="let course of courses" class="course-box">
+    <p>
+      <span class="label title">Title: </span>
+      <span class="value title-text">{{ course.title | uppercase }}</span>
+    </p>
+
+    <p>
+      <span class="label instructor">Instructor: </span>
+      <span class="value instructor-text">{{ course.instructor | lowercase }}</span>
+    </p>
+
+    <p>
+      Starts <span class="label date">On: </span>
+      <span class="value date-text">{{ course.startDate | date: 'dd/MM/yyyy' }}</span>
+    </p>
+
+    <p>
+      <span class="label price">Price: </span>
+      <span class="value price-text">{{ course.price | currency: 'INR' : 'symbol' : '1.2-2' }}</span>
+    </p>
+
+    <p>
+      <span class="label about">About: </span>
+      <span class="value about-text">{{ course.description | slice:0:30 }}...</span>
+    </p>
+
+    <hr />
+  </div>
+</div>
+
+<ng-template #noCourses>
+  <p>No courses available.</p>
+</ng-template>
